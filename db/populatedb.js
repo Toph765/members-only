@@ -15,7 +15,8 @@ const SQL = `
     CREATE TABLE IF NOT EXISTS messages (
         message_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         message VARCHAR (255),
-        timestamp VARCHAR (255)
+        timestamp VARCHAR (255),
+        user_id INTEGER
     );
 `
 async function main() {
