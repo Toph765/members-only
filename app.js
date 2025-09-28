@@ -9,10 +9,13 @@ const pgSession = require("connect-pg-simple")(session);
 require("dotenv").config();
 require("./lib/passport");
 
+const indexRouter = require("./routes/indexRouter");
+const signUpRouter = require("./routes/signUpRouter");
+
 const sessionStore = new pgSession({ pool });
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('views engine', 'ejs');
+app.set('view engine', 'ejs');
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -25,3 +28,10 @@ app.use(session({
 }))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
+
+app.use("/", indexRouter);
+app.use("/sign-up", signUpRouter);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));
