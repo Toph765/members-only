@@ -6,7 +6,10 @@
     <title>Log In</title>
 </head>
 <body>
-    <form action="/" method="get">
+    <% if (locals.message) { %>
+        <p><%= message %></p>
+    <% } %>
+    <form action="/" method="post">
         <div>
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
