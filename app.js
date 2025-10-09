@@ -11,6 +11,7 @@ require("./lib/passport");
 
 const indexRouter = require("./routes/indexRouter");
 const signUpRouter = require("./routes/signUpRouter");
+const homeRouter = require("./routes/homeRouter");
 
 const sessionStore = new pgSession({ pool });
 
@@ -24,13 +25,15 @@ app.use(session({
     store: sessionStore,
     cookie: {
         maxAge: 24 * 60 * 60 * 1000
-    }
-}))
+    },
+}));
+app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
 
 app.use("/", indexRouter);
 app.use("/sign-up", signUpRouter);
+app.use("/home", homeRouter);
 
 const PORT = process.env.PORT || 3000;
 
