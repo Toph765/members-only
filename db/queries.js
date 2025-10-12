@@ -14,6 +14,27 @@ async function addNewUser(userDetails) {
         ]);
 }
 
+async function getMessages() {
+    const { rows } = await pool.query(`
+        SELECT * FROM messages
+    `)
+
+    return rows;
+}
+
+async function addNewMessage(messageDetails) {
+    await pool.query(`
+        INSERT INTO messages (message, timestamp, user_id)
+        VALUES ($1, $2, $3)`,
+        [
+            messageDetails.message,
+            messageDetails.timestamp,
+            messageDetails.userId
+        ]);
+}
+
 module.exports = {
-    addNewUser
+    addNewUser,
+    getMessages,
+    addNewMessage,
 }
