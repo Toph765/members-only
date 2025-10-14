@@ -1,0 +1,38 @@
+<% function hideUname(uName) { %>
+    <% return uName.replace(/./g, "*"); %>
+<% } %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <% if (locals.user) { %>
+        <p>Welcome, <%= user.username %>!</p>
+    <% } %>
+
+    <% if (locals.messages) { %>
+        <% messages.map(message => { %>
+            <div>
+                <div>
+                    <% if ((user.is_member || user.is_admin) || user.username == message.username) { %>
+                        <p>@<%= message.username %></p>
+                    <% } else { %>
+                        <p>@<%= hideUname(message.username) %></p>
+                    <% } %>
+                    <p><%= message.timestamp %></p>
+                </div>
+                <div>
+                    <p><%= message.message %></p>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+    <a href="/home/new-message">New Message</a>
+    <a href="/log-out">Log Out</a>
+
+</body>
+</html>
