@@ -3,9 +3,11 @@ const { format } = require("date-fns");
 
 async function getHomePage(req, res) {
     const messages = await db.getMessages();
-    console.log(messages);
 
-    res.render("homepage", {user: req.user});
+    res.render("homepage", {
+        user: req.user,
+        messages: messages,
+    });
 };
 
 function getNewMessage(req, res) {
