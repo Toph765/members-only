@@ -16,7 +16,13 @@ async function addNewUser(userDetails) {
 
 async function getMessages() {
     const { rows } = await pool.query(`
-        SELECT * FROM messages
+        SELECT 
+            message_id, 
+            message, 
+            timestamp, 
+            users.username 
+        FROM messages
+        LEFT JOIN users ON messages.user_id = users.user_id
     `)
 
     return rows;
