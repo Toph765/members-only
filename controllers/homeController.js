@@ -29,8 +29,27 @@ async function postNewMessage(req, res) {
 
     res.redirect("/home");
 }
+
+function getMembership(req, res) {
+    res.render("membership");
+};
+
+async function postMembership(req, res) {
+    const { secretCode } = req.body;
+    const message = "Wrong secret code. Please try again."
+
+    if (secretCode !== "CatsAreAwesome4evah!!!") {
+        res.render("membership", { message: message });
+    } else {
+        await db.updateMembership(req.user.user_id);
+        res.redirect("/home");
+    }
+}
+
 module.exports = {
     getHomePage,
     getNewMessage,
-    postNewMessage
+    postNewMessage,
+    getMembership,
+    postMembership,
 }
