@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership</title>
+</head>
+<body>
+    <p>Be a member to know who's who!</p>
+    <% if (locals.message) { %>
+        <p><%= message %></p>
+    <% } %>
+    <form action="/home/membership" method="post">
+        <div>
+            <label for="secretCode">Secret Code:</label>
+            <input type="text" name="secretCode" id="secretCode">
+        </div>
+        <button type="submit">Enter</button>
+    </form>
+    <a href="/home">Back home</a>
+</body>
+</html>
