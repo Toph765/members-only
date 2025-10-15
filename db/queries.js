@@ -39,8 +39,19 @@ async function addNewMessage(messageDetails) {
         ]);
 }
 
+async function updateMembership(id) {
+    await pool.query(`
+        UPDATE users SET is_member = $1
+        WHERE user_id = $2
+    `, [
+        true,
+        id
+    ]);
+};
+
 module.exports = {
     addNewUser,
     getMessages,
     addNewMessage,
+    updateMembership,
 }
