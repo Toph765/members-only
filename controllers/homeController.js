@@ -46,10 +46,19 @@ async function postMembership(req, res) {
     }
 }
 
+async function postDeleteMessage(req, res) {
+    const { messageId } = req.params;
+
+    await db.deleteMessage(messageId);
+
+    res.redirect("/home");
+}
+
 module.exports = {
     getHomePage,
     getNewMessage,
     postNewMessage,
     getMembership,
     postMembership,
+    postDeleteMessage,
 }
