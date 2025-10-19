@@ -49,9 +49,16 @@ async function updateMembership(id) {
     ]);
 };
 
+async function deleteMessage(id) {
+    await pool.query(`
+        DELETE FROM messages WHERE message_id = $1
+    `, [id]);
+}
+
 module.exports = {
     addNewUser,
     getMessages,
     addNewMessage,
     updateMembership,
+    deleteMessage,
 }
