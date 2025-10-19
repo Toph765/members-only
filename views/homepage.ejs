@@ -30,6 +30,12 @@
                 <div>
                     <p><%= message.message %></p>
                 </div>
+
+                <% if (user.is_admin) { %>
+                <form action="/home/<%= message.message_id %>/delete" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+                <% } %>
             </div>
         <% }) %>
     <% } %>
