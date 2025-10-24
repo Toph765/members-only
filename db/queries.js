@@ -1,9 +1,9 @@
 const pool = require("./pool");
 
 async function addNewUser(userDetails) {
-    await pool.query(`
+    const user = await pool.query(`
         INSERT INTO users (firstname, lastname, username, password, is_admin, is_member)
-        VALUES ($1, $2, $3, $4, $5, $6)`,
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING user_id`,
         [
             userDetails.firstName,
             userDetails.lastName,
@@ -12,6 +12,16 @@ async function addNewUser(userDetails) {
             userDetails.isAdmin,
             userDetails.isMember
         ]);
+
+    return user.rows[0].user_id;
+}
+
+async function getUserById(id) {
+    const { rows } = await pool.query(`
+        SELECT * FROM users WHERE user_id = $1
+    `, [id]);
+
+    return rows[0];
 }
 
 async function getMessages() {
@@ -55,10 +65,20 @@ async function deleteMessage(id) {
     `, [id]);
 }
 
+async function isUnameAvailable(username) {
+    const { rows } = await pool.query(`
+        SELECT * FROM users WHERE username = $1
+    `, [username]);
+
+    return rows.length > 0 ? false : true;
+}
+
 module.exports = {
     addNewUser,
+    getUserById,
     getMessages,
     addNewMessage,
     updateMembership,
     deleteMessage,
+    isUnameAvailable
 }
